@@ -33,32 +33,38 @@ Sistema de notícias de tecnologia com suporte multilíngue (**Inglês**, **Port
 
 ### 📝 Registro
 
-![Registro](./register.png)
+![Registro](./docs/register.png)
 
 ---
 
 ### 🔐 Login
 
-![Login](./login.png)
+![Login](./docs/login.png)
 
 ---
 
 ### 🏠 Home — **Inglês**
 
-![Home EN](./home_us.png)
+![Home EN](./docs/home_us.png)
 
-![Home Scroll EN](./home2_us.png)
+![Home Scroll EN](./docs/home2_us.png)
 
 ---
 
 ### 🏠 Home — **Português**
 
-![Home PT](./home_pt.png)
+![Home PT](./docs/home_pt.png)
+
+---
+
+### 🏠 Home — **Espanhol**
+
+![Home ES](./docs/home_es.png)
 
 ---
 
 ### ⭐ Favoritos — **Português**
 
-![Favoritos PT](./favoritos_pt.png)
+![Favoritos PT](./docs/favoritos_pt.png)
 
 ---
