@@ -15,14 +15,19 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = User::create([
-            'name' => $request->string('name'),
-            'email' => $request->string('email'),
-            'password' => Hash::make($request->string('password')),
-            'language' => $request->string('language'),
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'language' => $request->input('language'),
         ]);
 
-        return redirect()->route('login')->with('success', 'Cadastro realizado com sucesso! Faça login para continuar.');
+        Auth::login($user);
+        app()->setLocale($user->language);
+
+        return redirect()->route('news')
+            ->with('success', __('messages.register_success'));
     }
+
 
     public function login(LoginRequest $request)
     {
@@ -30,11 +35,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/news');
+            app()->setLocale(Auth::user()->language);
+            return redirect()->route('news');
         }
 
         throw ValidationException::withMessages([
-            'email' => ['The credentials do not match any user.'],
+            'email' => [__('auth.failed')],
         ]);
     }
 
