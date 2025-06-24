@@ -7,14 +7,13 @@ use App\Models\User;
 
 class GNewsService
 {
-    private string $base_url = 'https://gnews.io/api/v4';
 
-    public function fetchNews(string $query = 'technology', string $language, int $max = 5)
+    public function fetchNews(string $language, int $max = 5)
     {
-        $response = Http::get("{$this->base_url}/search", [
-            'q' => $query,
+        $response = Http::get("https://gnews.io/api/v4/top-headlines", [
             'token' => config('services.gnews.key'),
             'lang' => $language,
+            'topic' => 'technology',
             'max' => $max,
         ]);
 

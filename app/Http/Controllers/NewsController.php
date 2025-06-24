@@ -12,15 +12,29 @@ class NewsController extends Controller
         $user = Auth::user();
         $language = $user->language;
 
-        // Cache por 1 hora (60 minutos) -> teste por enquanto evitar requests
-        $trending = cache()->remember("trending_{$language}", 3600, function () use ($gnews, $language) {
-            return $gnews->fetchNews($language, 'technology', 2);
+        $trending = cache()->remember("news_trending_{$language}", 3600, function () use ($gnews, $language) {
+            return $gnews->fetchNews($language, 2);
         });
 
-        $recent = cache()->remember("recent_{$language}", 3600, function () use ($gnews, $language) {
-            return $gnews->fetchNews($language, 'technology', 6);
+        $recent = cache()->remember("news_recent_{$language}", 3600, function () use ($gnews, $language) {
+            return $gnews->fetchNews($language, 10);
         });
+
+        $formatDates = function(array $items) {
+            foreach ($items as &$item) {
+                if (isset($item['publishedAt'])) {
+                    $item['formatted_date'] = \Carbon\Carbon::parse($item['publishedAt'])
+                        ->format('d/m/Y - H:i');
+                }
+            }
+            unset($item);
+            return $items;
+        };
+
+        $trending = $formatDates($trending);
+        $recent = $formatDates($recent);
 
         return view('news', compact('trending', 'recent'));
     }
+
 }
